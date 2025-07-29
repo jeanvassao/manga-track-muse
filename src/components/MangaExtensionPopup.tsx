@@ -96,85 +96,86 @@ const MangaCard: React.FC<{ manga: MangaData }> = ({ manga }) => {
   };
 
   const handleSiteSelect = (site: string) => {
-    // Simular URL para outros sites
     const baseUrl = `https://${site}/manga/${manga.title.toLowerCase().replace(/\s+/g, '-')}/${manga.lastChapter + 1}`;
     window.open(baseUrl, '_blank');
   };
 
   return (
-    <Card className="bg-manga-surface border-border/40 hover:bg-manga-surface-hover transition-all duration-300 shadow-card hover:shadow-glow group">
-      <div className="p-4 space-y-3">
-        {/* Título e informações básicas */}
+    <Card className="bg-manga-surface border-border/40 hover:bg-manga-surface-hover transition-all duration-300 shadow-card hover:shadow-glow group aspect-square">
+      <div className="p-3 h-full flex flex-col justify-between">
+        {/* Header com título */}
         <div className="space-y-2">
-          <h3 className="font-semibold text-foreground text-lg leading-tight group-hover:text-primary-glow transition-colors">
+          <h3 className="font-semibold text-foreground text-sm leading-tight group-hover:text-primary-glow transition-colors line-clamp-2">
             {manga.title}
           </h3>
           
-          <div className="flex items-center gap-3 text-sm text-muted-foreground">
-            <div className="flex items-center gap-1">
-              <Bookmark className="w-3.5 h-3.5 text-manga-chapter" />
+          <div className="space-y-1">
+            <div className="flex items-center gap-1 text-xs text-muted-foreground">
+              <Bookmark className="w-3 h-3 text-manga-chapter" />
               <span>Cap. {manga.lastChapter}</span>
             </div>
             
-            <div className="flex items-center gap-1">
-              <Calendar className="w-3.5 h-3.5" />
+            <div className="flex items-center gap-1 text-xs text-muted-foreground">
+              <Calendar className="w-3 h-3" />
               <span>{formatDate(manga.lastReadDate)}</span>
             </div>
           </div>
-
-          <div className="flex items-center gap-1 text-xs text-manga-site">
-            <Globe className="w-3 h-3" />
-            <span>lido em {manga.currentSite}</span>
-          </div>
         </div>
 
-        {/* Botões de ação */}
-        <div className="flex gap-2 pt-2">
-          <Button 
-            onClick={handleContinueReading}
-            className="flex-1 bg-gradient-primary hover:shadow-glow text-primary-foreground font-medium transition-all duration-300"
-            size="sm"
-          >
-            <ExternalLink className="w-4 h-4 mr-2" />
-            Continuar Lendo
-          </Button>
-
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button 
-                variant="outline" 
-                size="sm"
-                className="border-border/40 hover:bg-manga-surface-hover hover:border-primary/40"
-              >
-                <ChevronDown className="w-4 h-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent 
-              align="end" 
-              className="bg-popover border-border/40 shadow-float"
+        {/* Footer com botões */}
+        <div className="space-y-2">
+          <div className="flex items-center gap-1 text-xs text-manga-site">
+            <Globe className="w-3 h-3" />
+            <span className="truncate">{manga.currentSite}</span>
+          </div>
+          
+          <div className="flex gap-1">
+            <Button 
+              onClick={handleContinueReading}
+              className="flex-1 bg-gradient-primary hover:shadow-glow text-primary-foreground font-medium transition-all duration-300 h-7 text-xs"
+              size="sm"
             >
-              <div className="px-2 py-1.5 text-xs font-medium text-muted-foreground">
-                Outros sites:
-              </div>
-              {manga.alternativeSites.map((site) => (
-                <DropdownMenuItem 
-                  key={site}
-                  onClick={() => handleSiteSelect(site)}
-                  className="hover:bg-manga-surface cursor-pointer"
+              <ExternalLink className="w-3 h-3 mr-1" />
+              Ler
+            </Button>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  className="border-border/40 hover:bg-manga-surface-hover hover:border-primary/40 h-7 w-8 p-0"
                 >
-                  <Globe className="w-3.5 h-3.5 mr-2" />
-                  {site}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+                  <ChevronDown className="w-3 h-3" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent 
+                align="end" 
+                className="bg-popover border-border/40 shadow-float"
+              >
+                <div className="px-2 py-1.5 text-xs font-medium text-muted-foreground">
+                  Outros sites:
+                </div>
+                {manga.alternativeSites.map((site) => (
+                  <DropdownMenuItem 
+                    key={site}
+                    onClick={() => handleSiteSelect(site)}
+                    className="hover:bg-manga-surface cursor-pointer text-xs"
+                  >
+                    <Globe className="w-3 h-3 mr-2" />
+                    {site}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
       </div>
     </Card>
   );
 };
 
-const MangaListItem: React.FC<{ manga: MangaData }> = ({ manga }) => {
+const MangaCompactCard: React.FC<{ manga: MangaData }> = ({ manga }) => {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     const today = new Date();
@@ -183,7 +184,7 @@ const MangaListItem: React.FC<{ manga: MangaData }> = ({ manga }) => {
     
     if (diffDays === 0) return 'hoje';
     if (diffDays === 1) return 'ontem';
-    if (diffDays < 7) return `${diffDays}d atrás`;
+    if (diffDays < 7) return `${diffDays}d`;
     return date.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' });
   };
 
@@ -192,34 +193,39 @@ const MangaListItem: React.FC<{ manga: MangaData }> = ({ manga }) => {
   };
 
   return (
-    <div className="group hover:bg-manga-surface/50 rounded-lg p-3 transition-colors duration-200 cursor-pointer border border-transparent hover:border-border/30">
-      <div className="flex items-center justify-between">
-        <div className="flex-1 min-w-0">
-          <h3 className="font-medium text-foreground text-sm truncate group-hover:text-primary-glow transition-colors">
+    <Card className="bg-manga-surface border-border/40 hover:bg-manga-surface-hover transition-all duration-300 shadow-card hover:shadow-glow group aspect-square">
+      <div className="p-3 h-full flex flex-col justify-between">
+        {/* Título */}
+        <div>
+          <h3 className="font-medium text-foreground text-sm leading-tight group-hover:text-primary-glow transition-colors line-clamp-2">
             {manga.title}
           </h3>
-          <div className="flex items-center gap-3 mt-1">
-            <div className="flex items-center gap-1 text-xs text-muted-foreground">
-              <Bookmark className="w-3 h-3 text-manga-chapter" />
-              <span>Cap. {manga.lastChapter}</span>
-            </div>
-            <div className="flex items-center gap-1 text-xs text-muted-foreground">
-              <Clock className="w-3 h-3" />
-              <span>{formatDate(manga.lastReadDate)}</span>
-            </div>
+        </div>
+
+        {/* Info central */}
+        <div className="space-y-2 text-center">
+          <div className="flex items-center justify-center gap-1 text-xs text-muted-foreground">
+            <Bookmark className="w-3 h-3 text-manga-chapter" />
+            <span>Cap. {manga.lastChapter}</span>
+          </div>
+          
+          <div className="flex items-center justify-center gap-1 text-xs text-muted-foreground">
+            <Clock className="w-3 h-3" />
+            <span>{formatDate(manga.lastReadDate)}</span>
           </div>
         </div>
-        
+
+        {/* Botão de ação */}
         <Button
           onClick={handleContinueReading}
           size="sm"
-          className="ml-3 h-7 px-3 bg-gradient-primary hover:shadow-glow text-primary-foreground text-xs opacity-0 group-hover:opacity-100 transition-all duration-200"
+          className="w-full h-7 bg-gradient-primary hover:shadow-glow text-primary-foreground text-xs font-medium transition-all duration-300"
         >
           <ExternalLink className="w-3 h-3 mr-1" />
           Ler
         </Button>
       </div>
-    </div>
+    </Card>
   );
 };
 
@@ -267,7 +273,7 @@ const MangaExtensionPopup: React.FC = () => {
             </TabsList>
           </div>
 
-          <TabsContent value="recent" className="flex-1 overflow-auto p-4 pt-3 space-y-3 mt-0">
+          <TabsContent value="recent" className="flex-1 overflow-auto p-4 pt-3 mt-0">
             <div className="flex items-center justify-between mb-3">
               <h2 className="text-sm font-semibold text-secondary-foreground">
                 Leituras Recentes
@@ -277,9 +283,11 @@ const MangaExtensionPopup: React.FC = () => {
               </span>
             </div>
 
-            {recentManga.map((manga) => (
-              <MangaCard key={manga.id} manga={manga} />
-            ))}
+            <div className="grid grid-cols-2 gap-3">
+              {recentManga.map((manga) => (
+                <MangaCard key={manga.id} manga={manga} />
+              ))}
+            </div>
           </TabsContent>
 
           <TabsContent value="all" className="flex-1 overflow-auto p-4 pt-3 mt-0">
@@ -292,9 +300,9 @@ const MangaExtensionPopup: React.FC = () => {
               </span>
             </div>
 
-            <div className="space-y-1">
+            <div className="grid grid-cols-2 gap-3">
               {mangaList.map((manga) => (
-                <MangaListItem key={manga.id} manga={manga} />
+                <MangaCompactCard key={manga.id} manga={manga} />
               ))}
             </div>
           </TabsContent>
