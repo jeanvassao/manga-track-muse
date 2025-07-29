@@ -1,11 +1,23 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import MangaExtensionPopup from '@/components/MangaExtensionPopup';
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <div className="min-h-screen bg-background flex items-center justify-center p-8">
+      <div className="text-center space-y-8">
+        <div className="space-y-4">
+          <h1 className="text-4xl font-bold text-foreground">Extensão de Mangás</h1>
+          <p className="text-xl text-muted-foreground">Preview da interface da popup</p>
+        </div>
+        
+        <div className="flex justify-center">
+          <div className="border border-border/40 rounded-lg shadow-float">
+            <MangaExtensionPopup />
+          </div>
+        </div>
+        
+        <p className="text-sm text-muted-foreground max-w-md mx-auto">
+          Interface otimizada para popup de extensão (400x600px) com tema escuro e design moderno
+        </p>
       </div>
     </div>
   );
