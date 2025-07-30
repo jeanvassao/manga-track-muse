@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MangaTrackMuse - Configurações</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a0a;
+      color: #ffffff;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+    
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #333;
+    }
+    
+    .header img {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+    }
+    
+    .header h1 {
+      font-size: 28px;
+      font-weight: 600;
+    }
+    
+    .section {
+      background: #1a1a1a;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    
+    .section h2 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #8b5cf6;
+    }
+    
+    .setting-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #333;
+    }
+    
+    .setting-item:last-child {
+      border-bottom: none;
+    }
+    
+    .setting-label {
+      flex: 1;
+    }
+    
+    .setting-label h3 {
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    
+    .setting-label p {
+      font-size: 14px;
+      color: #888;
+    }
+    
+    .toggle {
+      position: relative;
+      width: 48px;
+      height: 24px;
+      background: #333;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .toggle.active {
+      background: #8b5cf6;
+    }
+    
+    .toggle::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.3s;
+    }
+    
+    .toggle.active::after {
+      transform: translateX(24px);
+    }
+    
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .input-group label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #ccc;
+    }
+    
+    .input-group input, .input-group select {
+      background: #333;
+      border: 1px solid #555;
+      border-radius: 6px;
+      padding: 8px 12px;
+      color: white;
+      font-size: 14px;
+    }
+    
+    .button {
+      background: #8b5cf6;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .button:hover {
+      background: #7c3aed;
+    }
+    
+    .button.secondary {
+      background: #333;
+    }
+    
+    .button.secondary:hover {
+      background: #555;
+    }
+    
+    .button.danger {
+      background: #ef4444;
+    }
+    
+    .button.danger:hover {
+      background: #dc2626;
+    }
+    
+    .manga-list {
+      display: grid;
+      gap: 12px;
+    }
+    
+    .manga-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #333;
+      padding: 12px;
+      border-radius: 8px;
+    }
+    
+    .manga-item img {
+      width: 48px;
+      height: 64px;
+      object-fit: cover;
+      border-radius: 4px;
+      background: #555;
+    }
+    
+    .manga-info {
+      flex: 1;
+    }
+    
+    .manga-info h4 {
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    
+    .manga-info p {
+      font-size: 12px;
+      color: #888;
+    }
+    
+    .manga-actions {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .icon-button {
+      background: #555;
+      border: none;
+      border-radius: 4px;
+      padding: 6px;
+      color: white;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    
+    .icon-button:hover {
+      background: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="icons/icon-base.png" alt="MangaTrackMuse">
+      <div>
+        <h1>MangaTrackMuse</h1>
+        <p style="color: #888; margin-top: 4px;">Configurações da Extensão</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Configurações Gerais</h2>
+      
+      <div class="setting-item">
+        <div class="setting-label">
+          <h3>Auto-detectar Mangás</h3>
+          <p>Detecta automaticamente quando você está lendo um mangá</p>
+        </div>
+        <div class="toggle active" data-setting="autoDetect"></div>
+      </div>
+      
+      <div class="setting-item">
+        <div class="setting-label">
+          <h3>Notificações</h3>
+          <p>Receber notificações sobre progresso de leitura</p>
+        </div>
+        <div class="toggle active" data-setting="notifications"></div>
+      </div>
+      
+      <div class="setting-item">
+        <div class="setting-label">
+          <h3>Sincronização</h3>
+          <p>Intervalo de sincronização automática</p>
+        </div>
+        <div class="input-group">
+          <select id="syncInterval">
+            <option value="15">15 minutos</option>
+            <option value="30" selected>30 minutos</option>
+            <option value="60">1 hora</option>
+            <option value="120">2 horas</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Sites Preferidos</h2>
+      <p style="color: #888; margin-bottom: 16px;">Escolha os sites de mangá que você mais utiliza</p>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+          <input type="checkbox" checked data-site="mangadx.org">
+          <span>MangaDex</span>
+        </label>
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+          <input type="checkbox" checked data-site="mangakakalot.com">
+          <span>Mangakakalot</span>
+        </label>
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+          <input type="checkbox" data-site="manganelo.com">
+          <span>Manganelo</span>
+        </label>
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+          <input type="checkbox" data-site="readmanganato.com">
+          <span>Manganato</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Mangás Salvos</h2>
+      <div id="manga-list" class="manga-list">
+        <p style="color: #888;">Carregando mangás...</p>
+      </div>
+      
+      <div style="display: flex; gap: 12px; margin-top: 16px;">
+        <button class="button" onclick="exportData()">Exportar Dados</button>
+        <button class="button secondary" onclick="importData()">Importar Dados</button>
+        <button class="button danger" onclick="clearAllData()">Limpar Tudo</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>
